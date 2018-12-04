@@ -1,0 +1,8 @@
+Description:
+    Installs additional Generalized Api resources.
+
+Example:
+    rails generate generalized_api:install
+
+    This will create:
+        what/will/it/create

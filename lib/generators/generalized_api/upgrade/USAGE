@@ -1,0 +1,8 @@
+Description:
+    Upgrades previously installed Generalized Api resources.
+
+Example:
+    rails generate generalized_api:upgrade
+
+    This will create:
+        what/will/it/create

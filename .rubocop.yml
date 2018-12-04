@@ -1,0 +1,41 @@
+inherit_from:
+  - https://raw.githubusercontent.com/bkuhlmann/code_quality/v2.1.0/configurations/rubocop/ruby.yml
+  - https://raw.githubusercontent.com/bkuhlmann/code_quality/v2.1.0/configurations/rubocop/rails.yml
+
+AllCops:
+  Exclude:
+    - 'db/*'
+    - 'db/migrate/*'
+    - 'config/initializers/devise.rb'
+    - 'bin/*'
+    - 'spec/dummy/config/environments/*'
+    - 'spec/dummy/bin/*'
+    - 'spec/dummy/db/**/*'
+    - 'generalized_api.gemspec'
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/AbcSize:
+  Max: 26
+
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: false   
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Style/MixinGrouping:
+  Exclude:
+    - 'spec/rails_helper.rb'
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/test_helper.rb'
+
+Rails/HttpPositionalArguments:
+  Enabled: false
