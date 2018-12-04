@@ -25,7 +25,7 @@
 ## Features
 - Single, DRY controller to expose the database to requests by way of a JSON API using the standard rails MVC pathways.
 - Syntax developed to allow highly configurable and logical queries against the database such as like queries on string fields, paginated requests and ordering.
-- Developed to interact wtih the (GeneralizedResource)[] gem to provide a ActiveRecord-like chainable relation syntax for interacting with a JSON api.  
+- Developed to interact wtih the (GeneralizedResource)[https://github.com/OddballGreg/generalized_resource] gem to provide a ActiveRecord-like chainable relation syntax for interacting with a JSON api.  
 
 ## To Do
 - Configurable Model Exposure List
