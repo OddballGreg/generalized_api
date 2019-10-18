@@ -159,7 +159,7 @@ module GeneralizedApi
       return :id unless params["order_by"]
       params["order_by"].split(',').map do |order_set| 
         order_set = order_set.split(' ')
-        next unless resource.columns.map(&:name).include?(order_set[0]) && %i(desc asc).include?(order_set[1].downcase)
+        next unless resource.columns.map(&:name).include?(order_set[0]) && %w(desc asc).include?(order_set[1].downcase)
         { order_set[0] => order_set[1] }
       end
     end
