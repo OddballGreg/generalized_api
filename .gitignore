@@ -3,4 +3,6 @@
 pkg/*
 Gemfile.lock
 tmp
-coverage/**/*
+coverage
+spec/dummy/db/test.sqlite3
+spec/dummy/log/test.log
