@@ -8,8 +8,8 @@ module GeneralizedApi
     @@filters = {}
 
     def index
-      query = resource.where(permitted_params).order(order_param).paginate(pagination_params)
-      yield if block_given? 
+      query = resource.where(permitted_params).order(order_params).paginate(pagination_params)
+      yield query if block_given? 
       query = filters(query)
       body = {resource_key.pluralize => query}
       render_processed_entity(body)
@@ -17,7 +17,7 @@ module GeneralizedApi
 
     def count
       query = resource.where(permitted_params).count
-      yield if block_given? 
+      yield query if block_given? 
       query = filters(query)
       body = {resource_key.pluralize + '_count' => query}
       render_processed_entity(body)
@@ -68,8 +68,8 @@ module GeneralizedApi
 
     def search
       if params["search_field"] && params["search_string"]
-        query = resource.where(permitted_params).where(fuzzy_search_field, fuzzy_search_query).order(order_param).paginate(pagination_params)
-        yield if block_given? 
+        query = resource.where(permitted_params).where(fuzzy_search_field, fuzzy_search_query).order(order_params).paginate(pagination_params)
+        yield query if block_given? 
         query = filters(query)
 
         render_processed_entity(resource_key.pluralize => query)
@@ -116,19 +116,23 @@ module GeneralizedApi
     private
 
     def skip_filter_due_to_except?(method)
-      method.dig(:options, :except) && ((method.dig(:options, :except).is_a?(Array) && method.dig(:options, :except).map(&:to_sym).include?(action_name.to_sym)) || method.dig(:options, :except).try(:to_sym) == action_name.to_sym)
+      except_set = method.dig(:options, :except)
+      except_set && ((except_set.is_a?(Array) && except_set.map(&:to_sym).include?(action_name.to_sym)) || except_set.try(:to_sym) == action_name.to_sym)
     end
 
     def apply_filter_due_to_only?(method)
-      method.dig(:options, :only).nil? || method.dig(:options, :only).try(:to_sym) == action_name.to_sym || (method.dig(:options, :only).is_a?(Array) && method.dig(:options, :only).map(&:to_sym).include?(action_name.to_sym))
+      only_set = method.dig(:options, :only)
+      only_set.nil? || only_set.try(:to_sym) == action_name.to_sym || (only_set.is_a?(Array) && only_set.map(&:to_sym).include?(action_name.to_sym))
     end
 
     def skip_filter_due_to_unless?(method)
-      method.dig(:options, :unless).nil? || [*method.dig(:options, :unless)].all?(&:call)
+      unless_set = method.dig(:options, :unless)
+      unless_set.nil? || [*unless_set].all?(&:call)
     end
 
     def apply_filter_due_to_if?(method)
-      method.dig(:options, :next).nil? || [*method.dig(:options, :next)].all?(&:call)
+      next_set = method.dig(:options, :next)
+      next_set.nil? || [*next_set].all?(&:call)
     end
 
     def filters(information)
@@ -151,8 +155,12 @@ module GeneralizedApi
       wildcard + params["search_string"] + wildcard
     end
 
-    def order_param
-      params["order_by"] || :id
+    def order_params
+      return :id unless params["order_by"]
+      params["order_by"].split(',').map do |order_set| 
+        order_set = order_set.split(' ')
+        {order_set[0] => order_set[1]}
+      end
     end
 
     def pagination_params
