@@ -5,7 +5,7 @@ require "will_paginate"
 module GeneralizedApi
   module Api
     extend ActiveSupport::Concern
-    @@callbacks = {}
+    @@filters = {}
 
     # def index
     #   query = resource.where(permitted_params).order(order_param).paginate(pagination_params)
@@ -78,87 +78,73 @@ module GeneralizedApi
     # end
 
     def index
-      callback_structure do
-        query = resource.where(permitted_params).order(order_param).paginate(pagination_params)
-        query = yield query if block_given? 
-        query = filters(query)
-        body = {resource_key.pluralize => query}
-        render_processed_entity(body)
-      end
+      query = resource.where(permitted_params).order(order_param).paginate(pagination_params)
+      query = yield query if block_given? 
+      query = filters(query)
+      body = {resource_key.pluralize => query}
+      render_processed_entity(body)
     end
 
     def count
-      callback_structure do
-        query = resource.where(permitted_params).count
-        query = yield query if block_given? 
-        query = filters(query)
-        body = {resource_key.pluralize + '_count' => query}
-        render_processed_entity(body)
-      end
+      query = resource.where(permitted_params).count
+      query = yield query if block_given? 
+      query = filters(query)
+      body = {resource_key.pluralize + '_count' => query}
+      render_processed_entity(body)
     end
 
     def show
-      callback_structure do
-        operate_on_valid_object do |object|
-          object = yield object if block_given? 
-          object = filters(object)
-          render_processed_entity(resource_key => object)
-        end
+      operate_on_valid_object do |object|
+        object = yield object if block_given? 
+        object = filters(object)
+        render_processed_entity(resource_key => object)
       end
     end
 
     def create
-      callback_structure do
-        object = resource.new(permitted_params)
-        object = yield object if block_given? 
-        object = filters(object)
-        render_processed_entity(resource_key => object) && return if object.save
-        render_unprocessable_entity(messages: object.errors.full_messages.uniq)
-      end
+      object = resource.new(permitted_params)
+      object = yield object if block_given? 
+      object = filters(object)
+      render_processed_entity(resource_key => object) && return if object.save
+      render_unprocessable_entity(messages: object.errors.full_messages.uniq)
     end
 
     def destroy
-      callback_structure do
-        operate_on_valid_object do |object|
-          if object.destroy
-            object = yield object if block_given? 
-            object = filters(object)
-            render_processed_entity(message: "#{resource_key} With ID #{params[:id]} Succesfully Deleted")
-            return
-          else
-            render_unprocessable_entity(messages: object.errors.full_messages.uniq)
-          end
+      operate_on_valid_object do |object|
+        if object.destroy
+          object = yield object if block_given? 
+          object = filters(object)
+          render_processed_entity(message: "#{resource_key} With ID #{params[:id]} Succesfully Deleted")
+          return
+        else
+          render_unprocessable_entity(messages: object.errors.full_messages.uniq)
         end
       end
     end
 
     def update
-      callback_structure do
-        operate_on_valid_object do |object|
-          object.update(permitted_params)
-          if object.save
-            object = yield object if block_given? 
-            object = filters(object)
-            render_processed_entity(resource_key => object)
-            return
-          else
-            render_unprocessable_entity(messages: object.errors.full_messages.uniq)
-          end
+      operate_on_valid_object do |object|
+        object.update(permitted_params)
+        if object.save
+          object = yield object if block_given? 
+          object = filters(object)
+          render_processed_entity(resource_key => object)
+          return
+        else
+          render_unprocessable_entity(messages: object.errors.full_messages.uniq)
         end
       end
     end
 
     def search
-      callback_structure do
-        if params["search_field"] && params["search_string"]
-          query = resource.where(permitted_params).where(fuzzy_search_field, fuzzy_search_query).order(order_param).paginate(pagination_params)
-          query = yield query if block_given? 
-          query = filters(query)
+      if params["search_field"] && params["search_string"]
+        query = resource.where(permitted_params).where(fuzzy_search_field, fuzzy_search_query).order(order_param).paginate(pagination_params)
+        query = yield query if block_given? 
+        query = filters(query)
 
-          render_processed_entity(resource_key.pluralize => query)
-        else
-          render_unprocessable_entity(messages: "Please select a 'search_field' and a 'search_string'")
-        end
+        render_processed_entity(resource_key.pluralize => query)
+      else
+        render_unprocessable_entity(messages: "Please select a 'search_field' and a 'search_string'")
       end
     end
 
@@ -191,50 +177,39 @@ module GeneralizedApi
         end
       end
 
-      def self.before_action(method_name, options={})
-        @@callbacks[self] ||= {before: [], after: [], filter: []}
-        @@callbacks[self][:before] << method_name.to_sym
-      end
-
       def self.apply_filter(method_name, options={})
-        @@callbacks[self] ||= {before: [], after: [], filter: []}
-        @@callbacks[self][:filter] << method_name.to_sym
-      end
-
-      def self.after_action(method_name, option={})
-        @@callbacks[self] ||= {before: [], after: [], filter: []}
-        @@callbacks[self][:after] << method_name.to_sym
+        @@filters[self] ||= {before: [], after: [], filter: []}
+        @@filters[self][:filter] << { method_name: method_name.to_sym, options: options }
       end
     end
 
     private
 
-    def callback_structure
-      before_callbacks
-      yield
-      after_callbacks
+    def skip_filter_due_to_except?(method)
+      method.dig(:options, :except) && ((method.dig(:options, :except).is_a?(Array) && method.dig(:options, :except).include?(params[:action])) || method.dig(:options, :except) == params[:action])
+    end
+
+    def apply_filter_due_to_only?(method)
+      method.dig(:options, :only).nil? || method.dig(:options, :only) == params[:action] || (method.dig(:options, :only).is_a?(Array) && method.dig(:options, :only).include?(params[:action]))
+    end
+
+    def skip_filter_due_to_unless?(method)
+      method.dig(:options, :unless).nil? || [*method.dig(:options, :unless)].all?(&:call)
+    end
+
+    def apply_filter_due_to_if?(method)
+      method.dig(:options, :next).nil? || [*method.dig(:options, :next)].all?(&:call)
     end
 
     def filters(information)
-      return information unless @@callbacks[self.class]
-      @@callbacks[self.class][:filter].each do |method_name|
-        information = self.send(method_name, information)
+      return information unless @@filters[self.class]
+      @@filters[self.class][:filter].each do |method|
+        next if skip_filter_due_to_except?(method)
+        next unless apply_filter_due_to_only?(method)
+        next unless skip_filter_due_to_unless?(method)
+        information = self.send(method[:method_name], information) if apply_filter_due_to_if?(method)
       end
       information
-    end
-
-    def before_callbacks
-      return unless @@callbacks[self.class]
-      @@callbacks[self.class][:before].each do |method_name|
-        self.send(method_name)
-      end
-    end
-
-    def after_callbacks
-      return unless @@callbacks[self.class]
-      @@callbacks[self.class][:after].each do |method_name|
-        self.send(method_name)
-      end
     end
 
     def fuzzy_search_field
