@@ -31044,3 +31044,530 @@ Processing by BlocksController#create as HTML
   [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "blocks" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "gawreg"], ["created_at", "2018-08-28 13:00:08.604339"], ["updated_at", "2018-08-28 13:00:08.604339"]]
   [1m[35m (164.7ms)[0m  [1m[36mcommit transaction[0m
 Completed 200 OK in 172ms (Views: 1.2ms | ActiveRecord: 165.5ms)
+Processing by ModuleApiController#search as HTML
+  Parameters: {"search_field"=>"name", "search_string"=>"a", "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"search_field"=>"name", "search_string"=>"a", "model"=>"customer", "controller"=>"module_api", "action"=>"search"} permitted: false>
+  [1m[36mCustomer Load (1.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE (name LIKE '%a%') ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 79ms (Views: 70.2ms | ActiveRecord: 2.1ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.5ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:00.334098"], ["updated_at", "2019-10-18 08:03:00.334098"]]
+  [1m[35m (4.4ms)[0m  [1m[36mcommit transaction[0m
+Processing by ModuleApiController#destroy as HTML
+  Parameters: {"model"=>"customer", "id"=>"675"}
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 675], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Destroy (0.1ms)[0m  [1m[31mDELETE FROM "customers" WHERE "customers"."id" = ?[0m  [["id", 675]]
+  [1m[35m (2.9ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 10ms (Views: 4.0ms | ActiveRecord: 3.1ms)
+Processing by ModuleApiController#index as HTML
+  Parameters: {"customers"=>{"name"=>"customer"}, "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customers"=>{"name"=>"customer"}, "model"=>"customer", "controller"=>"module_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 45ms (Views: 43.4ms | ActiveRecord: 1.0ms)
+Processing by ModuleApiController#search as HTML
+  Parameters: {"customer"=>{"stuff"=>"bob"}, "search_field"=>"name", "search_string"=>"a", "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"stuff"=>"bob"}, "search_field"=>"name", "search_string"=>"a", "model"=>"customer", "controller"=>"module_api", "action"=>"search"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"stuff"=>"bob"} permitted: true>
+  [1m[36mCustomer Load (0.2ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."stuff" = ? AND (name LIKE '%a%') ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["stuff", "bob"], ["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.2ms)
+Processing by ModuleApiController#count as HTML
+  Parameters: {"model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"model"=>"customer", "controller"=>"module_api", "action"=>"count"} permitted: false>
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+Processing by ModuleApiController#index as HTML
+  Parameters: {"page"=>"1", "per_page"=>"10", "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"page"=>"1", "per_page"=>"10", "model"=>"customer", "controller"=>"module_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+Completed 200 OK in 2ms (Views: 1.1ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Create (0.1ms)[0m  [1m[32mINSERT INTO "tests" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:00.406302"], ["updated_at", "2019-10-18 08:03:00.406302"]]
+  [1m[35m (3.3ms)[0m  [1m[36mcommit transaction[0m
+Processing by ModuleApiController#update as HTML
+  Parameters: {"test"=>{"updated_at"=>"2019-10-18T10:03:00+02:00"}, "model"=>"tests", "id"=>"560"}
+  [1m[36mTest Load (0.1ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" WHERE "tests"."id" = ? LIMIT ?[0m  [["id", 560], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"test"=>{"updated_at"=>"2019-10-18T10:03:00+02:00"}, "model"=>"tests", "id"=>"560", "controller"=>"module_api", "action"=>"update"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"updated_at"=>"2019-10-18T10:03:00+02:00"} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Update (0.1ms)[0m  [1m[33mUPDATE "tests" SET "updated_at" = ? WHERE "tests"."id" = ?[0m  [["updated_at", "2019-10-18 08:03:00"], ["id", 560]]
+  [1m[35m (5.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 9ms (Views: 0.2ms | ActiveRecord: 5.9ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mBlock Create (0.1ms)[0m  [1m[32mINSERT INTO "blocks" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "gawreg"], ["created_at", "2019-10-18 08:03:00.422009"], ["updated_at", "2019-10-18 08:03:00.422009"]]
+  [1m[35m (3.0ms)[0m  [1m[36mcommit transaction[0m
+Processing by ModuleApiController#update as HTML
+  Parameters: {"block"=>{"created_at"=>"2019-10-18T10:03:00+02:00"}, "model"=>"blocks", "id"=>"322"}
+  [1m[36mBlock Load (0.2ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" WHERE "blocks"."id" = ? LIMIT ?[0m  [["id", 322], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"block"=>{"created_at"=>"2019-10-18T10:03:00+02:00"}, "model"=>"blocks", "id"=>"322", "controller"=>"module_api", "action"=>"update"} permitted: false>
+Unpermitted parameter: :created_at
+	Permitted Params: <ActionController::Parameters {} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 6.1ms)
+Processing by ModuleApiController#count as HTML
+  Parameters: {"customer"=>{"name"=>"test"}, "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>"test"}, "model"=>"customer", "controller"=>"module_api", "action"=>"count"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"name"=>"test"} permitted: true>
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers" WHERE "customers"."name" = ?[0m  [["name", "test"]]
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers" WHERE "customers"."name" = ?[0m  [["name", "test"]]
+Processing by ModuleApiController#index as HTML
+  Parameters: {"model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"model"=>"customer", "controller"=>"module_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (0.8ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 47ms (Views: 45.4ms | ActiveRecord: 0.8ms)
+Processing by ModuleApiController#index as HTML
+  Parameters: {"model"=>"test"}
+	Params Recieved: <ActionController::Parameters {"model"=>"test", "controller"=>"module_api", "action"=>"index"} permitted: false>
+  [1m[36mTest Load (0.8ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" ORDER BY "tests"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 39ms (Views: 38.0ms | ActiveRecord: 0.8ms)
+Processing by ModuleApiController#index as HTML
+  Parameters: {"model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"model"=>"customer", "controller"=>"module_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 50ms (Views: 48.1ms | ActiveRecord: 1.0ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:00.570464"], ["updated_at", "2019-10-18 08:03:00.570464"]]
+  [1m[35m (4.8ms)[0m  [1m[36mcommit transaction[0m
+Processing by ModuleApiController#show as HTML
+  Parameters: {"model"=>"customer", "id"=>"676"}
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 676], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+Processing by ModuleApiController#index as HTML
+  Parameters: {"order_by"=>"name", "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"order_by"=>"name", "model"=>"customer", "controller"=>"module_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.3ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY name LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 51ms (Views: 49.1ms | ActiveRecord: 1.3ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:00.629872"], ["updated_at", "2019-10-18 08:03:00.629872"]]
+  [1m[35m (4.5ms)[0m  [1m[36mcommit transaction[0m
+Processing by ModuleApiController#update as HTML
+  Parameters: {"customer"=>{"name"=>""}, "model"=>"customer", "id"=>"677"}
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 677], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>""}, "model"=>"customer", "id"=>"677", "controller"=>"module_api", "action"=>"update"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"name"=>""} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 4ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:00.640183"], ["updated_at", "2019-10-18 08:03:00.640183"]]
+  [1m[35m (5.1ms)[0m  [1m[36mcommit transaction[0m
+Processing by ModuleApiController#update as HTML
+  Parameters: {"customer"=>{"name"=>"new_name", "stuff"=>"aerwgh"}, "model"=>"customer", "id"=>"678"}
+  [1m[36mCustomer Load (0.2ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 678], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>"new_name", "stuff"=>"aerwgh"}, "model"=>"customer", "id"=>"678", "controller"=>"module_api", "action"=>"update"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"name"=>"new_name", "stuff"=>"aerwgh"} permitted: true>
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Update (0.3ms)[0m  [1m[33mUPDATE "customers" SET "name" = ?, "updated_at" = ? WHERE "customers"."id" = ?[0m  [["name", "new_name"], ["updated_at", "2019-10-18 08:03:00.650119"], ["id", 678]]
+  [1m[35m (4.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 9ms (Views: 0.4ms | ActiveRecord: 4.7ms)
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 678], ["LIMIT", 1]]
+Processing by ModuleApiController#create as HTML
+  Parameters: {"customer"=>{"stuff"=>"aerwgh"}, "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"stuff"=>"aerwgh"}, "model"=>"customer", "controller"=>"module_api", "action"=>"create"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"stuff"=>"aerwgh"} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+Processing by ModuleApiController#create as HTML
+  Parameters: {"customer"=>{"name"=>"gawreg", "stuff"=>"aerwgh"}, "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>"gawreg", "stuff"=>"aerwgh"}, "model"=>"customer", "controller"=>"module_api", "action"=>"create"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"name"=>"gawreg", "stuff"=>"aerwgh"} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:00.663446"], ["updated_at", "2019-10-18 08:03:00.663446"]]
+  [1m[35m (4.2ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 4.4ms)
+Processing by ClassApiController#index as HTML
+  Parameters: {"model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"model"=>"customer", "controller"=>"class_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.3ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 51ms (Views: 49.2ms | ActiveRecord: 1.3ms)
+Processing by ClassApiController#index as HTML
+  Parameters: {"page"=>"1", "per_page"=>"10", "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"page"=>"1", "per_page"=>"10", "model"=>"customer", "controller"=>"class_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.1ms)
+Processing by ClassApiController#index as HTML
+  Parameters: {"order_by"=>"name", "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"order_by"=>"name", "model"=>"customer", "controller"=>"class_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.6ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY name LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 67ms (Views: 65.3ms | ActiveRecord: 1.6ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:00.793312"], ["updated_at", "2019-10-18 08:03:00.793312"]]
+  [1m[35m (5.1ms)[0m  [1m[36mcommit transaction[0m
+Processing by ClassApiController#show as HTML
+  Parameters: {"model"=>"customer", "id"=>"680"}
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 680], ["LIMIT", 1]]
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:00.802548"], ["updated_at", "2019-10-18 08:03:00.802548"]]
+  [1m[35m (4.5ms)[0m  [1m[36mcommit transaction[0m
+Processing by ClassApiController#destroy as HTML
+  Parameters: {"model"=>"customer", "id"=>"681"}
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 681], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Destroy (0.1ms)[0m  [1m[31mDELETE FROM "customers" WHERE "customers"."id" = ?[0m  [["id", 681]]
+  [1m[35m (4.6ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 6ms (Views: 0.1ms | ActiveRecord: 4.8ms)
+Processing by ClassApiController#index as HTML
+  Parameters: {"customers"=>{"name"=>"customer"}, "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customers"=>{"name"=>"customer"}, "model"=>"customer", "controller"=>"class_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (0.9ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 47ms (Views: 45.6ms | ActiveRecord: 0.9ms)
+Processing by ClassApiController#count as HTML
+  Parameters: {"model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"model"=>"customer", "controller"=>"class_api", "action"=>"count"} permitted: false>
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers"[0m
+Processing by ClassApiController#index as HTML
+  Parameters: {"model"=>"test"}
+	Params Recieved: <ActionController::Parameters {"model"=>"test", "controller"=>"class_api", "action"=>"index"} permitted: false>
+  [1m[36mTest Load (0.8ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" ORDER BY "tests"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 43ms (Views: 41.9ms | ActiveRecord: 0.8ms)
+Processing by ClassApiController#search as HTML
+  Parameters: {"customer"=>{"stuff"=>"bob"}, "search_field"=>"name", "search_string"=>"a", "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"stuff"=>"bob"}, "search_field"=>"name", "search_string"=>"a", "model"=>"customer", "controller"=>"class_api", "action"=>"search"} permitted: false>
+	Permitted Params: {"stuff"=>"bob"}
+  [1m[36mCustomer Load (0.2ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."stuff" = ? AND (name LIKE '%a%') ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["stuff", "bob"], ["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.2ms)
+Processing by ClassApiController#count as HTML
+  Parameters: {"customer"=>{"name"=>"test"}, "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>"test"}, "model"=>"customer", "controller"=>"class_api", "action"=>"count"} permitted: false>
+	Permitted Params: {"name"=>"test"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers" WHERE "customers"."name" = ?[0m  [["name", "test"]]
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "customers" WHERE "customers"."name" = ?[0m  [["name", "test"]]
+Processing by ClassApiController#search as HTML
+  Parameters: {"search_field"=>"name", "search_string"=>"a", "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"search_field"=>"name", "search_string"=>"a", "model"=>"customer", "controller"=>"class_api", "action"=>"search"} permitted: false>
+  [1m[36mCustomer Load (1.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE (name LIKE '%a%') ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 46ms (Views: 44.4ms | ActiveRecord: 1.0ms)
+Processing by ClassApiController#index as HTML
+  Parameters: {"model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"model"=>"customer", "controller"=>"class_api", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 51ms (Views: 49.0ms | ActiveRecord: 1.0ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Create (0.1ms)[0m  [1m[32mINSERT INTO "tests" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.010952"], ["updated_at", "2019-10-18 08:03:01.010952"]]
+  [1m[35m (5.4ms)[0m  [1m[36mcommit transaction[0m
+Processing by ClassApiController#update as HTML
+  Parameters: {"test"=>{"updated_at"=>"2019-10-18T10:03:01+02:00"}, "model"=>"tests", "id"=>"561"}
+  [1m[36mTest Load (0.1ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" WHERE "tests"."id" = ? LIMIT ?[0m  [["id", 561], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"test"=>{"updated_at"=>"2019-10-18T10:03:01+02:00"}, "model"=>"tests", "id"=>"561", "controller"=>"class_api", "action"=>"update"} permitted: false>
+	Permitted Params: {"updated_at"=>"2019-10-18T10:03:01+02:00"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Update (0.3ms)[0m  [1m[33mUPDATE "tests" SET "updated_at" = ? WHERE "tests"."id" = ?[0m  [["updated_at", "2019-10-18 08:03:01"], ["id", 561]]
+  [1m[35m (7.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 12ms (Views: 0.2ms | ActiveRecord: 8.1ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mBlock Create (0.1ms)[0m  [1m[32mINSERT INTO "blocks" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "gawreg"], ["created_at", "2019-10-18 08:03:01.030835"], ["updated_at", "2019-10-18 08:03:01.030835"]]
+  [1m[35m (3.5ms)[0m  [1m[36mcommit transaction[0m
+Processing by ClassApiController#update as HTML
+  Parameters: {"block"=>{"created_at"=>"2019-10-18T10:03:01+02:00"}, "model"=>"blocks", "id"=>"323"}
+  [1m[36mBlock Load (0.0ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" WHERE "blocks"."id" = ? LIMIT ?[0m  [["id", 323], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"block"=>{"created_at"=>"2019-10-18T10:03:01+02:00"}, "model"=>"blocks", "id"=>"323", "controller"=>"class_api", "action"=>"update"} permitted: false>
+	Permitted Params: {}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 8.2ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.037881"], ["updated_at", "2019-10-18 08:03:01.037881"]]
+  [1m[35m (3.4ms)[0m  [1m[36mcommit transaction[0m
+Processing by ClassApiController#update as HTML
+  Parameters: {"customer"=>{"name"=>"new_name", "stuff"=>"aerwgh"}, "model"=>"customer", "id"=>"682"}
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 682], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>"new_name", "stuff"=>"aerwgh"}, "model"=>"customer", "id"=>"682", "controller"=>"class_api", "action"=>"update"} permitted: false>
+	Permitted Params: {"name"=>"new_name", "stuff"=>"aerwgh"}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Update (0.1ms)[0m  [1m[33mUPDATE "customers" SET "name" = ?, "updated_at" = ? WHERE "customers"."id" = ?[0m  [["name", "new_name"], ["updated_at", "2019-10-18 08:03:01.043930"], ["id", 682]]
+  [1m[35m (3.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 3.8ms)
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 682], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.049898"], ["updated_at", "2019-10-18 08:03:01.049898"]]
+  [1m[35m (2.9ms)[0m  [1m[36mcommit transaction[0m
+Processing by ClassApiController#update as HTML
+  Parameters: {"customer"=>{"name"=>""}, "model"=>"customer", "id"=>"683"}
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 683], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>""}, "model"=>"customer", "id"=>"683", "controller"=>"class_api", "action"=>"update"} permitted: false>
+	Permitted Params: {"name"=>""}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+Processing by ClassApiController#create as HTML
+  Parameters: {"customer"=>{"stuff"=>"aerwgh"}, "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"stuff"=>"aerwgh"}, "model"=>"customer", "controller"=>"class_api", "action"=>"create"} permitted: false>
+	Permitted Params: {"stuff"=>"aerwgh"}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+Processing by ClassApiController#create as HTML
+  Parameters: {"customer"=>{"name"=>"gawreg", "stuff"=>"aerwgh"}, "model"=>"customer"}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>"gawreg", "stuff"=>"aerwgh"}, "model"=>"customer", "controller"=>"class_api", "action"=>"create"} permitted: false>
+	Permitted Params: {"name"=>"gawreg", "stuff"=>"aerwgh"}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.059112"], ["updated_at", "2019-10-18 08:03:01.059112"]]
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 4.0ms)
+Processing by TestsController#search as HTML
+  Parameters: {"search_field"=>"name", "search_string"=>"a"}
+	Params Recieved: <ActionController::Parameters {"search_field"=>"name", "search_string"=>"a", "controller"=>"tests", "action"=>"search"} permitted: false>
+  [1m[36mTest Load (0.9ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" WHERE (name LIKE '%a%') ORDER BY "tests"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 39ms (Views: 37.4ms | ActiveRecord: 0.9ms)
+Processing by TestsController#index as HTML
+  Parameters: {"page"=>"1", "per_page"=>"10"}
+	Params Recieved: <ActionController::Parameters {"page"=>"1", "per_page"=>"10", "controller"=>"tests", "action"=>"index"} permitted: false>
+  [1m[36mTest Load (0.1ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" ORDER BY "tests"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.1ms)
+Processing by TestsController#index as HTML
+	Params Recieved: <ActionController::Parameters {"controller"=>"tests", "action"=>"index"} permitted: false>
+  [1m[36mTest Load (0.8ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" ORDER BY "tests"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 39ms (Views: 38.0ms | ActiveRecord: 0.8ms)
+Processing by TestsController#index as HTML
+  Parameters: {"tests"=>{"name"=>"test"}}
+	Params Recieved: <ActionController::Parameters {"tests"=>{"name"=>"test"}, "controller"=>"tests", "action"=>"index"} permitted: false>
+  [1m[36mTest Load (0.8ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" ORDER BY "tests"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 41ms (Views: 40.3ms | ActiveRecord: 0.8ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Create (0.1ms)[0m  [1m[32mINSERT INTO "tests" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.192486"], ["updated_at", "2019-10-18 08:03:01.192486"]]
+  [1m[35m (4.5ms)[0m  [1m[36mcommit transaction[0m
+Processing by TestsController#show as HTML
+  Parameters: {"id"=>"562"}
+  [1m[36mTest Load (0.1ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" WHERE "tests"."id" = ? LIMIT ?[0m  [["id", 562], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Create (0.1ms)[0m  [1m[32mINSERT INTO "tests" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.199848"], ["updated_at", "2019-10-18 08:03:01.199848"]]
+  [1m[35m (3.6ms)[0m  [1m[36mcommit transaction[0m
+Processing by TestsController#destroy as HTML
+  Parameters: {"id"=>"563"}
+  [1m[36mTest Load (0.2ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" WHERE "tests"."id" = ? LIMIT ?[0m  [["id", 563], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Destroy (0.3ms)[0m  [1m[31mDELETE FROM "tests" WHERE "tests"."id" = ?[0m  [["id", 563]]
+  [1m[35m (3.6ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 7ms (Views: 0.3ms | ActiveRecord: 4.2ms)
+Processing by TestsController#index as HTML
+	Params Recieved: <ActionController::Parameters {"controller"=>"tests", "action"=>"index"} permitted: false>
+  [1m[36mTest Load (1.7ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" ORDER BY "tests"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 45ms (Views: 42.3ms | ActiveRecord: 1.7ms)
+Processing by TestsController#index as HTML
+  Parameters: {"order_by"=>"name"}
+	Params Recieved: <ActionController::Parameters {"order_by"=>"name", "controller"=>"tests", "action"=>"index"} permitted: false>
+  [1m[36mTest Load (1.2ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" ORDER BY name LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 43ms (Views: 41.1ms | ActiveRecord: 1.2ms)
+Processing by TestsController#create as HTML
+  Parameters: {"test"=>{"stuff"=>"aerwgh"}}
+	Params Recieved: <ActionController::Parameters {"test"=>{"stuff"=>"aerwgh"}, "controller"=>"tests", "action"=>"create"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"stuff"=>"aerwgh"} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+Processing by TestsController#create as HTML
+  Parameters: {"test"=>{"name"=>"gawreg", "stuff"=>"aerwgh"}}
+	Params Recieved: <ActionController::Parameters {"test"=>{"name"=>"gawreg", "stuff"=>"aerwgh"}, "controller"=>"tests", "action"=>"create"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"name"=>"gawreg", "stuff"=>"aerwgh"} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Create (0.1ms)[0m  [1m[32mINSERT INTO "tests" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.306505"], ["updated_at", "2019-10-18 08:03:01.306505"]]
+  [1m[35m (5.8ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 7ms (Views: 0.2ms | ActiveRecord: 5.9ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Create (0.1ms)[0m  [1m[32mINSERT INTO "tests" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.313972"], ["updated_at", "2019-10-18 08:03:01.313972"]]
+  [1m[35m (4.6ms)[0m  [1m[36mcommit transaction[0m
+Processing by TestsController#update as HTML
+  Parameters: {"test"=>{"name"=>"new_name", "stuff"=>"aerwgh"}, "id"=>"565"}
+  [1m[36mTest Load (0.1ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" WHERE "tests"."id" = ? LIMIT ?[0m  [["id", 565], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"test"=>{"name"=>"new_name", "stuff"=>"aerwgh"}, "id"=>"565", "controller"=>"tests", "action"=>"update"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"name"=>"new_name", "stuff"=>"aerwgh"} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Update (0.2ms)[0m  [1m[33mUPDATE "tests" SET "name" = ?, "updated_at" = ? WHERE "tests"."id" = ?[0m  [["name", "new_name"], ["updated_at", "2019-10-18 08:03:01.320646"], ["id", 565]]
+  [1m[35m (7.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 10ms (Views: 0.2ms | ActiveRecord: 8.1ms)
+  [1m[36mTest Load (0.1ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" WHERE "tests"."id" = ? LIMIT ?[0m  [["id", 565], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTest Create (0.1ms)[0m  [1m[32mINSERT INTO "tests" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.331105"], ["updated_at", "2019-10-18 08:03:01.331105"]]
+  [1m[35m (4.6ms)[0m  [1m[36mcommit transaction[0m
+Processing by TestsController#update as HTML
+  Parameters: {"test"=>{"name"=>""}, "id"=>"566"}
+  [1m[36mTest Load (0.0ms)[0m  [1m[34mSELECT  "tests".* FROM "tests" WHERE "tests"."id" = ? LIMIT ?[0m  [["id", 566], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"test"=>{"name"=>""}, "id"=>"566", "controller"=>"tests", "action"=>"update"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"name"=>""} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mBlock Create (0.1ms)[0m  [1m[32mINSERT INTO "blocks" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "gawreg"], ["created_at", "2019-10-18 08:03:01.339535"], ["updated_at", "2019-10-18 08:03:01.339535"]]
+  [1m[35m (4.7ms)[0m  [1m[36mcommit transaction[0m
+Processing by BlocksController#destroy as HTML
+  Parameters: {"id"=>"324"}
+  [1m[36mBlock Load (0.2ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" WHERE "blocks"."id" = ? LIMIT ?[0m  [["id", 324], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mBlock Destroy (0.4ms)[0m  [1m[31mDELETE FROM "blocks" WHERE "blocks"."id" = ?[0m  [["id", 324]]
+  [1m[35m (5.4ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 10ms (Views: 0.5ms | ActiveRecord: 6.2ms)
+Processing by BlocksController#search as HTML
+  Parameters: {"search_field"=>"name", "search_string"=>"a"}
+	Params Recieved: <ActionController::Parameters {"search_field"=>"name", "search_string"=>"a", "controller"=>"blocks", "action"=>"search"} permitted: false>
+  [1m[36mBlock Load (1.3ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" WHERE (name LIKE '%a%') ORDER BY "blocks"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 30ms (Views: 27.6ms | ActiveRecord: 1.3ms)
+Processing by BlocksController#index as HTML
+	Params Recieved: <ActionController::Parameters {"controller"=>"blocks", "action"=>"index"} permitted: false>
+  [1m[36mBlock Load (0.8ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" ORDER BY "blocks"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 26ms (Views: 22.3ms | ActiveRecord: 0.8ms)
+Processing by BlocksController#index as HTML
+  Parameters: {"page"=>"1", "per_page"=>"10"}
+	Params Recieved: <ActionController::Parameters {"page"=>"1", "per_page"=>"10", "controller"=>"blocks", "action"=>"index"} permitted: false>
+  [1m[36mBlock Load (0.1ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" ORDER BY "blocks"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+Completed 200 OK in 2ms (Views: 0.8ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mBlock Create (0.1ms)[0m  [1m[32mINSERT INTO "blocks" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "gawreg"], ["created_at", "2019-10-18 08:03:01.422229"], ["updated_at", "2019-10-18 08:03:01.422229"]]
+  [1m[35m (5.4ms)[0m  [1m[36mcommit transaction[0m
+Processing by BlocksController#show as HTML
+  Parameters: {"id"=>"325"}
+  [1m[36mBlock Load (0.1ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" WHERE "blocks"."id" = ? LIMIT ?[0m  [["id", 325], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms)
+Processing by BlocksController#index as HTML
+  Parameters: {"order_by"=>"name"}
+	Params Recieved: <ActionController::Parameters {"order_by"=>"name", "controller"=>"blocks", "action"=>"index"} permitted: false>
+  [1m[36mBlock Load (0.7ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" ORDER BY name LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 30ms (Views: 26.1ms | ActiveRecord: 0.7ms)
+Processing by BlocksController#index as HTML
+  Parameters: {"blocks"=>{"name"=>"block"}}
+	Params Recieved: <ActionController::Parameters {"blocks"=>{"name"=>"block"}, "controller"=>"blocks", "action"=>"index"} permitted: false>
+  [1m[36mBlock Load (0.8ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" ORDER BY "blocks"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 32ms (Views: 27.4ms | ActiveRecord: 0.8ms)
+Processing by BlocksController#index as HTML
+	Params Recieved: <ActionController::Parameters {"controller"=>"blocks", "action"=>"index"} permitted: false>
+  [1m[36mBlock Load (0.8ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" ORDER BY "blocks"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 25ms (Views: 18.9ms | ActiveRecord: 0.8ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mBlock Create (0.1ms)[0m  [1m[32mINSERT INTO "blocks" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "gawreg"], ["created_at", "2019-10-18 08:03:01.522082"], ["updated_at", "2019-10-18 08:03:01.522082"]]
+  [1m[35m (4.7ms)[0m  [1m[36mcommit transaction[0m
+Processing by BlocksController#update as HTML
+  Parameters: {"block"=>{"name"=>"new_name"}, "id"=>"326"}
+  [1m[36mBlock Load (0.1ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" WHERE "blocks"."id" = ? LIMIT ?[0m  [["id", 326], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"block"=>{"name"=>"new_name"}, "id"=>"326", "controller"=>"blocks", "action"=>"update"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"name"=>"new_name"} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mBlock Update (0.1ms)[0m  [1m[33mUPDATE "blocks" SET "name" = ?, "updated_at" = ? WHERE "blocks"."id" = ?[0m  [["name", "new_name"], ["updated_at", "2019-10-18 08:03:01.528600"], ["id", 326]]
+  [1m[35m (4.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 4.2ms)
+  [1m[36mBlock Load (0.1ms)[0m  [1m[34mSELECT  "blocks".* FROM "blocks" WHERE "blocks"."id" = ? LIMIT ?[0m  [["id", 326], ["LIMIT", 1]]
+Processing by BlocksController#create as HTML
+  Parameters: {"block"=>{"name"=>"gawreg"}}
+	Params Recieved: <ActionController::Parameters {"block"=>{"name"=>"gawreg"}, "controller"=>"blocks", "action"=>"create"} permitted: false>
+	Permitted Params: <ActionController::Parameters {"name"=>"gawreg"} permitted: true>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mBlock Create (0.1ms)[0m  [1m[32mINSERT INTO "blocks" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "gawreg"], ["created_at", "2019-10-18 08:03:01.536073"], ["updated_at", "2019-10-18 08:03:01.536073"]]
+  [1m[35m (4.5ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 4.6ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.542692"], ["updated_at", "2019-10-18 08:03:01.542692"]]
+  [1m[35m (4.6ms)[0m  [1m[36mcommit transaction[0m
+Processing by CustomersController#show as HTML
+  Parameters: {"id"=>"685"}
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 685], ["LIMIT", 1]]
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms)
+Processing by CustomersController#index as HTML
+  Parameters: {"order_by"=>"name"}
+	Params Recieved: <ActionController::Parameters {"order_by"=>"name", "controller"=>"customers", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.3ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY name LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 49ms (Views: 47.5ms | ActiveRecord: 1.3ms)
+Processing by CustomersController#index as HTML
+  Parameters: {"customers"=>{"name"=>"customer"}}
+	Params Recieved: <ActionController::Parameters {"customers"=>{"name"=>"customer"}, "controller"=>"customers", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 52ms (Views: 50.4ms | ActiveRecord: 1.1ms)
+Processing by CustomersController#index as HTML
+	Params Recieved: <ActionController::Parameters {"controller"=>"customers", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 47ms (Views: 45.4ms | ActiveRecord: 1.1ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.701567"], ["updated_at", "2019-10-18 08:03:01.701567"]]
+  [1m[35m (5.2ms)[0m  [1m[36mcommit transaction[0m
+Processing by CustomersController#destroy as HTML
+  Parameters: {"id"=>"686"}
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 686], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Destroy (0.1ms)[0m  [1m[31mDELETE FROM "customers" WHERE "customers"."id" = ?[0m  [["id", 686]]
+  [1m[35m (3.2ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 3.4ms)
+Processing by CustomersController#index as HTML
+  Parameters: {"page"=>"1", "per_page"=>"10"}
+	Params Recieved: <ActionController::Parameters {"page"=>"1", "per_page"=>"10", "controller"=>"customers", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (0.1ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.1ms)
+Processing by CustomersController#search as HTML
+  Parameters: {"search_field"=>"name", "search_string"=>"a"}
+	Params Recieved: <ActionController::Parameters {"search_field"=>"name", "search_string"=>"a", "controller"=>"customers", "action"=>"search"} permitted: false>
+  [1m[36mCustomer Load (1.3ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE (name LIKE '%a%') ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 50ms (Views: 47.9ms | ActiveRecord: 1.3ms)
+Processing by CustomersController#index as HTML
+	Params Recieved: <ActionController::Parameters {"controller"=>"customers", "action"=>"index"} permitted: false>
+  [1m[36mCustomer Load (1.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" ORDER BY "customers"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1000], ["OFFSET", 0]]
+Completed 200 OK in 52ms (Views: 51.0ms | ActiveRecord: 1.0ms)
+Processing by CustomersController#create as HTML
+  Parameters: {"customer"=>{"stuff"=>"aerwgh"}}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"stuff"=>"aerwgh"}, "controller"=>"customers", "action"=>"create"} permitted: false>
+	Permitted Params: {"stuff"=>"aerwgh"}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms)
+Processing by CustomersController#create as HTML
+  Parameters: {"customer"=>{"name"=>"gawreg", "stuff"=>"aerwgh"}}
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>"gawreg", "stuff"=>"aerwgh"}, "controller"=>"customers", "action"=>"create"} permitted: false>
+	Permitted Params: {"name"=>"gawreg", "stuff"=>"aerwgh"}
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.823519"], ["updated_at", "2019-10-18 08:03:01.823519"]]
+  [1m[35m (3.8ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 5ms (Views: 0.3ms | ActiveRecord: 3.9ms)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.2ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.829577"], ["updated_at", "2019-10-18 08:03:01.829577"]]
+  [1m[35m (8.8ms)[0m  [1m[36mcommit transaction[0m
+Processing by CustomersController#update as HTML
+  Parameters: {"customer"=>{"name"=>"new_name", "stuff"=>"aerwgh"}, "id"=>"688"}
+  [1m[36mCustomer Load (0.2ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 688], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>"new_name", "stuff"=>"aerwgh"}, "id"=>"688", "controller"=>"customers", "action"=>"update"} permitted: false>
+	Permitted Params: {"name"=>"new_name", "stuff"=>"aerwgh"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Update (0.1ms)[0m  [1m[33mUPDATE "customers" SET "name" = ?, "updated_at" = ? WHERE "customers"."id" = ?[0m  [["name", "new_name"], ["updated_at", "2019-10-18 08:03:01.843478"], ["id", 688]]
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 8ms (Views: 0.2ms | ActiveRecord: 4.3ms)
+  [1m[36mCustomer Load (0.0ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 688], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCustomer Create (0.1ms)[0m  [1m[32mINSERT INTO "customers" ("name", "stuff", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "gawreg"], ["stuff", "aerwgh"], ["created_at", "2019-10-18 08:03:01.849971"], ["updated_at", "2019-10-18 08:03:01.849971"]]
+  [1m[35m (3.6ms)[0m  [1m[36mcommit transaction[0m
+Processing by CustomersController#update as HTML
+  Parameters: {"customer"=>{"name"=>""}, "id"=>"689"}
+  [1m[36mCustomer Load (0.2ms)[0m  [1m[34mSELECT  "customers".* FROM "customers" WHERE "customers"."id" = ? LIMIT ?[0m  [["id", 689], ["LIMIT", 1]]
+	Params Recieved: <ActionController::Parameters {"customer"=>{"name"=>""}, "id"=>"689", "controller"=>"customers", "action"=>"update"} permitted: false>
+	Permitted Params: {"name"=>""}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 9ms (Views: 0.6ms | ActiveRecord: 0.8ms)

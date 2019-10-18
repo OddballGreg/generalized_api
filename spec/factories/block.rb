@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :block do
-    name "John"
+    name { 'John' }
   end
 end

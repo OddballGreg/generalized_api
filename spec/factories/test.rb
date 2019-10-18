@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :test do
-    name "John"
-    stuff "Doe"
+    name { 'John' }
+    stuff { 'Doe' }
   end
 end
