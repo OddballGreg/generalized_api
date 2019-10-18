@@ -186,11 +186,11 @@ module GeneralizedApi
     private
 
     def skip_filter_due_to_except?(method)
-      method.dig(:options, :except) && ((method.dig(:options, :except).is_a?(Array) && method.dig(:options, :except).include?(params[:action])) || method.dig(:options, :except) == params[:action])
+      method.dig(:options, :except) && ((method.dig(:options, :except).is_a?(Array) && method.dig(:options, :except).map(&:to_sym).include?(action_name.to_sym)) || method.dig(:options, :except).try(:to_sym) == action_name.to_sym)
     end
 
     def apply_filter_due_to_only?(method)
-      method.dig(:options, :only).nil? || method.dig(:options, :only) == params[:action] || (method.dig(:options, :only).is_a?(Array) && method.dig(:options, :only).include?(params[:action]))
+      method.dig(:options, :only).nil? || method.dig(:options, :only).try(:to_sym) == action_name.to_sym || (method.dig(:options, :only).is_a?(Array) && method.dig(:options, :only).map(&:to_sym).include?(action_name.to_sym))
     end
 
     def skip_filter_due_to_unless?(method)
