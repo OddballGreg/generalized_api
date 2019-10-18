@@ -7,79 +7,9 @@ module GeneralizedApi
     extend ActiveSupport::Concern
     @@filters = {}
 
-    # def index
-    #   query = resource.where(permitted_params).order(order_param).paginate(pagination_params)
-
-    #   query = yield query if block_given? 
-
-    #   body = {resource_key.pluralize => query}
-
-    #   render_processed_entity(body)
-    # end
-
-    # def count
-    #   query = resource.where(permitted_params).count
-  
-    #   query = yield query if block_given? 
-
-    #   body = {resource_key.pluralize + '_count' => query}
-
-    #   render_processed_entity(body)
-    # end
-
-    # def show
-    #   operate_on_valid_object do |object|
-    #     object = yield object if block_given? 
-    #     render_processed_entity(resource_key => object)
-    #   end
-    # end
-
-    # def create
-    #   object = resource.new(permitted_params)
-    #   object = yield object if block_given? 
-    #   render_processed_entity(resource_key => object) && return if object.save
-    #   render_unprocessable_entity(messages: object.errors.full_messages.uniq)
-    # end
-
-    # def destroy
-    #   operate_on_valid_object do |object|
-    #     if object.destroy
-    #       object = yield object if block_given? 
-    #       render_processed_entity(message: "#{resource_key} With ID #{params[:id]} Succesfully Deleted")
-    #       return
-    #     else
-    #       render_unprocessable_entity(messages: object.errors.full_messages.uniq)
-    #     end
-    #   end
-    # end
-
-    # def update
-    #   operate_on_valid_object do |object|
-    #     object.update(permitted_params)
-    #     if object.save
-    #       object = yield object if block_given? 
-    #       render_processed_entity(resource_key => object)
-    #       return
-    #     else
-    #       render_unprocessable_entity(messages: object.errors.full_messages.uniq)
-    #     end
-    #   end
-    # end
-
-    # def search
-    #   if params["search_field"] && params["search_string"]
-    #     query = resource.where(permitted_params).where(fuzzy_search_field, fuzzy_search_query).order(order_param).paginate(pagination_params)
-    #     query = yield query if block_given? 
-
-    #     render_processed_entity(resource_key.pluralize => query)
-    #   else
-    #     render_unprocessable_entity(messages: "Please select a 'search_field' and a 'search_string'")
-    #   end
-    # end
-
     def index
       query = resource.where(permitted_params).order(order_param).paginate(pagination_params)
-      query = yield query if block_given? 
+      yield if block_given? 
       query = filters(query)
       body = {resource_key.pluralize => query}
       render_processed_entity(body)
@@ -87,7 +17,7 @@ module GeneralizedApi
 
     def count
       query = resource.where(permitted_params).count
-      query = yield query if block_given? 
+      yield if block_given? 
       query = filters(query)
       body = {resource_key.pluralize + '_count' => query}
       render_processed_entity(body)
@@ -95,7 +25,7 @@ module GeneralizedApi
 
     def show
       operate_on_valid_object do |object|
-        object = yield object if block_given? 
+        yield object if block_given? 
         object = filters(object)
         render_processed_entity(resource_key => object)
       end
@@ -103,7 +33,7 @@ module GeneralizedApi
 
     def create
       object = resource.new(permitted_params)
-      object = yield object if block_given? 
+      yield object if block_given? 
       object = filters(object)
       render_processed_entity(resource_key => object) && return if object.save
       render_unprocessable_entity(messages: object.errors.full_messages.uniq)
@@ -111,9 +41,9 @@ module GeneralizedApi
 
     def destroy
       operate_on_valid_object do |object|
+        yield object if block_given? 
+        object = filters(object)
         if object.destroy
-          object = yield object if block_given? 
-          object = filters(object)
           render_processed_entity(message: "#{resource_key} With ID #{params[:id]} Succesfully Deleted")
           return
         else
@@ -124,10 +54,10 @@ module GeneralizedApi
 
     def update
       operate_on_valid_object do |object|
+        yield object if block_given? 
+        object = filters(object)
         object.update(permitted_params)
         if object.save
-          object = yield object if block_given? 
-          object = filters(object)
           render_processed_entity(resource_key => object)
           return
         else
@@ -139,7 +69,7 @@ module GeneralizedApi
     def search
       if params["search_field"] && params["search_string"]
         query = resource.where(permitted_params).where(fuzzy_search_field, fuzzy_search_query).order(order_param).paginate(pagination_params)
-        query = yield query if block_given? 
+        yield if block_given? 
         query = filters(query)
 
         render_processed_entity(resource_key.pluralize => query)
