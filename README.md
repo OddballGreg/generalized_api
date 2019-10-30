@@ -35,7 +35,6 @@
 - Hard Parameter Checking and exception on invalid request
   - The api will simply disregard unexpected parameters by nature of permitted params removing unexpected parameters. This may be undesireable as it can make diagnosing incorrect requests difficult, whereas an exception when invalid parameters are passed would simplify this process.
 - Negative (not) requests.
-- Dry up shared functionality between module and class versions.
 - Advanced Query Requests. Allow the requester to offload relational queries to SQL on the API server rather than reconstruct the joins manually after requesting both tables of information.
 - Permitted Paramter Helper
 - Route Helper
