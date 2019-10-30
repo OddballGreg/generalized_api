@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 module GeneralizedApi
-  require "generalized_api/identity"
-  require "generalized_api/engine"
-  require "generalized_api/api"
-  require "generalized_api/controller"
+  require 'generalized_api/identity'
+  require 'generalized_api/engine'
+  require 'generalized_api/api'
+  require 'generalized_api/controller'
 
-  DATABASE_LIKE = (ENV["RAILS_ENV"] == "production" ? "ILIKE" : "LIKE")
-  DATABASE_WILDCARD = "%"
+  DATABASE_LIKE = (ENV['RAILS_ENV'] == 'production' ? 'ILIKE' : 'LIKE')
+  DATABASE_WILDCARD = '%'
 
   CONFIG = {
     use_strong_parameters: false,
     restful_api: false,
     approved_generalized_api_param_classes: [String, Array, Integer, Float, TrueClass, FalseClass]
-  }
+  }.freeze
 
   def self.config
     yield CONFIG

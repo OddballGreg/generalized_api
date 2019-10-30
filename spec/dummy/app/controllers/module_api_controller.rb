@@ -2,7 +2,7 @@
 
 class ModuleApiController < ApplicationController
   include GeneralizedApi::Api
-  
+
   def initialize
     super
     @resource_params = {}

@@ -3,10 +3,9 @@
 module GeneralizedApi
   # Generator for updating existing files.
   class UpgradeGenerator < Rails::Generators::Base
-    source_root File.join(File.dirname(__FILE__), "..", "templates")
+    source_root File.join(File.dirname(__FILE__), '..', 'templates')
 
-    desc "Upgrades previously installed Generalized Api resources."
-    def upgrade
-    end
+    desc 'Upgrades previously installed Generalized Api resources.'
+    def upgrade; end
   end
 end

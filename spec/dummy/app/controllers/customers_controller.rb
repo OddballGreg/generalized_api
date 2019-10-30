@@ -9,7 +9,7 @@ class CustomersController < GeneralizedApi::Controller
   private
 
   def successful_callback
-    "successful callback"
+    'successful callback'
   end
 
   def a_filter(information)
