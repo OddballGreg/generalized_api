@@ -35,7 +35,6 @@
 - Hard Parameter Checking and exception on invalid request
   - The api will simply disregard unexpected parameters by nature of permitted params removing unexpected parameters. This may be undesireable as it can make diagnosing incorrect requests difficult, whereas an exception when invalid parameters are passed would simplify this process.
 - Negative (not) requests.
-- Dry up shared functionality between module and class versions.
 - Advanced Query Requests. Allow the requester to offload relational queries to SQL on the API server rather than reconstruct the joins manually after requesting both tables of information.
 - Permitted Paramter Helper
 - Route Helper
@@ -118,7 +117,7 @@ namespace :api do
   namespace :v1 do
     post ':model/query/count', to: 'api#count'
     get ':model/count', to: 'api#count'
-    post ':model/search', to: 'api#search'
+    post ':model/search', to: 'api#index'
     post ':model/query', to: 'api#index'
     post ':model', to: 'api#create'
     put ':model/:id', to: 'api#update'
@@ -285,7 +284,7 @@ HTTParty.post('http://localhost:3000/api/v1/customers/query', body: {customers: 
 For additional power, GeneralizedApi also exposes syntax for performing case-insensitive like searches against a string column provided the database supports it.  
 
 ```ruby
-HTTParty.post('http://localhost:3000/api/v1/customers/query/search', body: {search_field: 'full_name', search_string: '%Bar%', page: 1, per_page: 2}).body
+HTTParty.post('http://localhost:3000/api/v1/customers/query/search', body: {search: { 'full_name' =>'Bar'} , page: 1, per_page: 2} ).body
 
 # { 
 #   error: false,
@@ -312,7 +311,7 @@ HTTParty.post('http://localhost:3000/api/v1/customers/query/search', body: {sear
 GeneralizedApi allows you to specify an attribute to request the results in a specific order via the SQL.
 
 ```ruby
-HTTParty.post('http://localhost:3000/api/v1/customers/query/search', body: {search_field: 'full_name', search_string: '%Bar%', page: 1, per_page: 2, order_by: 'surname DESC'}).body
+HTTParty.post('http://localhost:3000/api/v1/customers/query/search', body: {search_field: 'full_name', search_string: '%Bar%', page: 1, per_page: 2, order_by: { 'surname' =>  'desc'} }).body
 
 # { 
 #   error: false,

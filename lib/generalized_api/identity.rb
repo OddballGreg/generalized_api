@@ -4,15 +4,15 @@ module GeneralizedApi
   # Gem identity information.
   module Identity
     def self.name
-      "generalized_api"
+      'generalized_api'
     end
 
     def self.label
-      "Generalized Api"
+      'Generalized Api'
     end
 
     def self.version
-      "1.0.0"
+      '2.0.0'
     end
 
     def self.version_label

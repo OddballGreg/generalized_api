@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = "~> 2.5"
   spec.add_dependency "rails", "~> 5.1"
-  spec.add_dependency "will_paginate"
+  # spec.add_dependency "will_paginate"
   spec.add_development_dependency "bundler-audit", "~> 0.6"
   spec.add_development_dependency "factory_bot_rails"
   spec.add_development_dependency "gemsmith", "~> 12.0"
@@ -36,6 +36,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "shoulda-matchers"
+  # spec.add_development_dependency "will_paginate"
+  spec.add_development_dependency "kaminari"
 
   spec.extra_rdoc_files = Dir["README*", "LICENSE*"]
   spec.files = Dir["lib/**/*"]
