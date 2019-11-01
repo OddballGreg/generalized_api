@@ -102,6 +102,14 @@ module GeneralizedApi
         end
       end
 
+      def self.infer_params_from_models(model_names)
+        full_params = {}
+        model_names.each do |model|
+          full_params[model.to_sym] = model.camelcase.constantize.columns.map(&:name).map(&:to_sym) - [:id]
+        end
+        full_params
+      end
+
       def self.apply_filter(method_name, options = {})
         @@filters[self] ||= { before: [], after: [], filter: [] }
         @@filters[self][:filter] << { method_name: method_name.to_sym, options: options }
