@@ -8,6 +8,7 @@ module GeneralizedApi
     extend ActiveSupport::Concern
     @@filters = {}
     @@_pagination_provider = nil
+    @@_extra_order_and_search_fields = %i(created_at updated_at)
 
     if Gem.loaded_specs.key?('kaminari')
       require 'kaminari'
@@ -110,6 +111,16 @@ module GeneralizedApi
         full_params
       end
 
+      def self.blacklist_parameter_attribute_names(param_set)
+        param_set.each do |model_key, banned_attributes|
+          @@resource_params = (@@resource_params[model_key] - banned_attributes)
+        end
+      end
+
+      def self.set_extra_order_and_search_fields(field_names)
+        @@_extra_order_and_search_fields = field_names
+      end
+
       def self.apply_filter(method_name, options = {})
         @@filters[self] ||= { before: [], after: [], filter: [] }
         @@filters[self][:filter] << { method_name: method_name.to_sym, options: options }
@@ -163,7 +174,7 @@ module GeneralizedApi
       return query unless do_fuzzy_search?
 
       params['search'].each do |key, value|
-        if _legal_resource_columns.include?(key) && value.is_a?(String)
+        if _order_and_search_params.include?(key) && value.is_a?(String)
           query = query.where(fuzzy_search_query(key), fuzzy_search_value(value))
         else
           puts "Discarding illegal fuzzy search key value set: #{key} => #{value}"
@@ -198,14 +209,14 @@ module GeneralizedApi
       params['order_by'].split(',').map do |order_set|
         order_set = order_set.split(' ')
         order_set[1] ||= 'desc'
-        next unless _legal_resource_columns.include?(order_set[0]) && %w[desc asc].include?(order_set[1].downcase)
+        next unless _order_and_search_params.include?(order_set[0]) && %w[desc asc].include?(order_set[1].downcase)
 
         { order_set[0] => order_set[1] }
       end
     end
 
-    def _legal_resource_columns
-      @_legal_resource_columns ||= resource.columns.map(&:name)
+    def _order_and_search_params
+      @_order_and_search_params ||= permitted_params + @@_extra_order_and_search_fields
     end
 
     def apply_pagination(query)
@@ -251,15 +262,17 @@ module GeneralizedApi
     end
 
     def permitted_params
-      logger.info "\tParams Recieved: #{params.inspect}"
-      return unless params.key? resource_key
+      @permitted_params || = begin
+        logger.info "\tParams Recieved: #{params.inspect}"
+        return unless params.key? resource_key
 
-      permitted_params_model_key = params[:model]&.singularize&.to_sym || self.class._controlled_resource_name
-      allowed_params = @@resource_params[permitted_params_model_key]
-      permitted = params.require(resource_key).permit allowed_params
+        permitted_params_model_key = params[:model]&.singularize&.to_sym || self.class._controlled_resource_name
+        allowed_params = @@resource_params[permitted_params_model_key]
+        permitted = params.require(resource_key).permit allowed_params
 
-      logger.info "\tPermitted Params: #{permitted.inspect}"
-      permitted
+        logger.info "\tPermitted Params: #{permitted.inspect}"
+        permitted
+      end
     end
 
     def resource
