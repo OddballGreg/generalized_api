@@ -12,7 +12,8 @@ module GeneralizedApi
   CONFIG = {
     use_strong_parameters: false,
     restful_api: false,
-    approved_generalized_api_param_classes: [String, Array, Integer, Float, TrueClass, FalseClass]
+    approved_generalized_api_param_classes: [String, Array, Integer, Float, TrueClass, FalseClass],
+    provide_count_index_header: false
   }.freeze
 
   def self.config

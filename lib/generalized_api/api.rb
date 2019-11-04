@@ -8,7 +8,7 @@ module GeneralizedApi
     extend ActiveSupport::Concern
     @@filters = {}
     @@_pagination_provider = nil
-    @@_extra_order_and_search_fields = %i(created_at updated_at)
+    @@_extra_order_and_search_fields = %i[created_at updated_at]
 
     if Gem.loaded_specs.key?('kaminari')
       require 'kaminari'
@@ -22,9 +22,9 @@ module GeneralizedApi
 
     def index
       query = apply_pagination(apply_fuzzy_searches(resource.where(permitted_params)).order(order_params))
-      # query = apply_fuzzy_searches(resource.where(permitted_params)).order(order_params).paginate(_pagination_params)
       yield query if block_given?
       query = filters(query)
+      response.headers['X-Total-Count'] = query.count if GeneralizedApi::CONFIG[:provide_count_index_header]
       body = { resource_key.pluralize => query }
       render_processed_entity(body)
     end
@@ -117,7 +117,7 @@ module GeneralizedApi
         end
       end
 
-      def self.set_extra_order_and_search_fields(field_names)
+      def self.allow_extra_order_and_search_fields(field_names)
         @@_extra_order_and_search_fields = field_names
       end
 
@@ -175,13 +175,30 @@ module GeneralizedApi
 
       params['search'].each do |key, value|
         if _order_and_search_params.include?(key) && value.is_a?(String)
-          query = query.where(fuzzy_search_query(key), fuzzy_search_value(value))
+          query = apply_search_by_search_style(query, key, value)
         else
           puts "Discarding illegal fuzzy search key value set: #{key} => #{value}"
         end
       end
 
       query
+    end
+
+    def apply_search_by_search_style(query, key, value)
+      if params['search_style'] == 'or'
+        apply_or_search_query(query, key, value)
+      else
+        query.where(fuzzy_search_query(key), fuzzy_search_value(value))
+      end
+    end
+
+    def apply_or_search_query(query, key, value)
+      @_first_or_applied = true
+      if @_first_or_applied
+        query.where(fuzzy_search_query(key), fuzzy_search_value(value))
+      else
+        query.or(query.where(fuzzy_search_query(key), fuzzy_search_value(value)))
+      end
     end
 
     def do_fuzzy_search?
@@ -262,7 +279,7 @@ module GeneralizedApi
     end
 
     def permissable_params
-      @permissable_params ||= @@resource_params[_permitted_params_model_key] 
+      @permissable_params ||= @@resource_params[_permitted_params_model_key]
     end
 
     def permitted_params
