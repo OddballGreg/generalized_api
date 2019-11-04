@@ -14,7 +14,7 @@ module GeneralizedApi
     restful_api: false,
     approved_generalized_api_param_classes: [String, Array, Integer, Float, TrueClass, FalseClass],
     provide_count_index_header: false
-  }.freeze
+  }
 
   def self.config
     yield CONFIG
