@@ -216,7 +216,7 @@ module GeneralizedApi
     end
 
     def _order_and_search_params
-      @_order_and_search_params ||= permitted_params + @@_extra_order_and_search_fields
+      @_order_and_search_params ||= permissable_params + @@_extra_order_and_search_fields
     end
 
     def apply_pagination(query)
@@ -261,18 +261,24 @@ module GeneralizedApi
       yield object
     end
 
-    def permitted_params
-      @permitted_params || = begin
-        logger.info "\tParams Recieved: #{params.inspect}"
-        return unless params.key? resource_key
+    def permissable_params
+      @permissable_params ||= @@resource_params[_permitted_params_model_key] 
+    end
 
-        permitted_params_model_key = params[:model]&.singularize&.to_sym || self.class._controlled_resource_name
-        allowed_params = @@resource_params[permitted_params_model_key]
-        permitted = params.require(resource_key).permit allowed_params
+    def permitted_params
+      @permitted_params ||= begin
+        logger.info "\tParams Recieved: #{params.inspect}"
+        return [] unless params.key? resource_key
+
+        permitted = params.require(resource_key).permit permissable_params
 
         logger.info "\tPermitted Params: #{permitted.inspect}"
         permitted
       end
+    end
+
+    def _permitted_params_model_key
+      @_permitted_params_model_key ||= params[:model]&.singularize&.to_sym || self.class._controlled_resource_name
     end
 
     def resource
