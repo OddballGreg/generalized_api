@@ -35,3 +35,6 @@ Style/ClassAndModuleChildren:
 
 Rails/HttpPositionalArguments:
   Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
